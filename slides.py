@@ -405,12 +405,12 @@ def normalise_dict(d):
     """Recursively normalise OrderedDict into dict. Sorts lists."""
     out = {}
     for k, v in dict(d).iteritems():
-        if hasattr(v, 'iteritems'):
+        if hasattr(v, 'items'):
             out[k] = normalise_dict(v)
         elif isinstance(v, list):
             out[k] = []
             for item in sorted(v):
-                if hasattr(item, 'iteritems'):
+                if hasattr(item, 'items'):
                     out[k].append(normalise_dict(item))
                 else:
                     out[k].append(item)
@@ -423,8 +423,30 @@ print(normalise_dict(xmltodict.parse(xml)))
 
 
 
-# How could this be implemented with comprehensions?
+# How could this be implemented with generator expressions?
 
+
+
+
+def normalise_dict2(d):
+    try:
+        return dict((k, normalise_dict2(v)) for k, v in d.items())
+    except AttributeError:
+        # There was no .items() -- not a dict-like object!
+        pass
+
+    # Special case: string-like objects. Are iterable but should be
+    # considered a single value.
+    if isinstance(d, basestring):
+        return d
+
+    try:
+        return sorted([normalise_dict2(v) for v in d])
+    except ValueError:
+        # d was not iterable -- not a sequence.
+        pass
+
+    return d
 
 
 
