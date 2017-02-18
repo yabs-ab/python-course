@@ -511,7 +511,7 @@ class Color:
 
 
 # Sub-classes!
-class Red:
+class Red(Color):
     def __init__(self, r):
         super().__init__(r, 0, 0)
 
