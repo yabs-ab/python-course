@@ -22,4 +22,4 @@ if __name__ == '__main__':
         print(f'Usage: {sys.argv[0]} <directory>', file=sys.stderr)
         sys.exit(1)
     else:
-        main()
+        main(path)
