@@ -21,6 +21,11 @@
 
 
 
+# https://stackoverflow.blog/2017/09/06/incredible-growth-python/
+
+
+
+
 # AGENDA
 
 #      1. What is Python?
@@ -28,6 +33,15 @@
 #           - Syntax
 #           - Guidelines
 #      3. What tools do I need?
+
+
+
+
+# APPROACH
+
+#      - Everything
+#      - In depth
+#      - In short amount of time
 
 
 
@@ -360,6 +374,34 @@ try:
     print(undefined_name)
 except Exception as e:
     print(type(e), '--', e)
+
+
+
+
+# INTERLUDE -- Duck Typing
+
+#            ..---..
+#          .'  _    `.
+#      __..'  (o)    :
+#     `..__          ;
+#          `.       /
+#            ;      `..---...___
+#          .'                   `~-. .-')
+#         .                         ' _.'
+#        :                           :
+#        \                           '
+#         +                         J
+#          `._                   _.'
+#             `~--....___...---~'
+
+
+
+
+# "If it looks like a duck, swims like a duck, and quacks like a duck,
+# then it probably is a duck"
+
+def recursive_sum(numbers):
+    pass
 
 
 
