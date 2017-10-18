@@ -110,8 +110,8 @@ def parse_index_lines(lines):
 def strip_xml_tags(text):
     """Return a version of `text` stripped of xml tags.
 
-    >>> strip_xml_tags('Vi är <a href="sylog.se">Sylog</a>!')
-    'Vi är Sylog!'
+    >>> strip_xml_tags('Vi kan <a href="python.org">Python</a>!')
+    'Vi kan Python!'
     """
     return re.sub(r'<.*?>', '', text)
 

@@ -5,7 +5,7 @@
 def ends_match(strings):
     """Count strings in `strings` where ends match.
 
-    Counts the number of strings in `string` with length 2 or more
+    Counts the number of strings in `strings` with length 2 or more
     where the first character is the same as the last.
 
     >>> ends_match(['this', 'is', 'a', 'test'])
@@ -15,9 +15,9 @@ def ends_match(strings):
 
 
 def pluralize(n, singular, plural=None):
-    """Pluralize `singular`.
+    """Return pluralization of `singular`.
 
-    Uses `plural` if provided, otherwise appends 's' to `singular`.
+    Uses `plural` if provided, otherwise returns `singular` with 's' appended.
 
     >>> pluralize(1, 'apple')
     'apple'
@@ -92,8 +92,8 @@ def parse_index_lines(lines):
 def strip_xml_tags(text):
     """Return a version of `text` stripped of xml tags.
 
-    >>> strip_xml_tags('Vi är <a href="sylog.se">Sylog</a>!')
-    'Vi är Sylog!'
+    >>> strip_xml_tags('Vi kan <a href="python.org">Python</a>!')
+    'Vi kan Python!'
     """
     pass
 
