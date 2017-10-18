@@ -137,6 +137,13 @@ b = 2**3
 
 # Built-in types!
 
+# https://docs.python.org/3/library/stdtypes.html
+
+
+
+
+# int and float
+
 
 
 
@@ -182,59 +189,38 @@ hellos = ('hello', 'hi', 'hey', 'howdy')
 
 
 
-# set
+# INTERLUDE -- tuple vs list
+
+# Technical differences
+#     - tuples are faster
+#     - tuples are immutable
+#     - tuples are hashable
+
+
+
+
+# INTERLUDE -- tuple vs list
+
+# Cultural differences
+#     - Use tuples for heterogeneous collections
+#     - Use lists for homogeneous collections
+#     - Use tuples where position matters
+
+
+
+
+# set (and frozenset)
 
 fruits = {'apple', 'banana', 'pear', 'pear'}
 
 
 
 
-# dictionary
+# dict
 
-heights = {
-    'Burj Khalifa':  829.8,
-    'Coast Redwood': 115.61,
-    'Robert Wadlow': 2.72
-}
-
-
-
-
-# Pop-Quiz!
-# What does this print out?
-
-def append_twice(seq, elem):
-    seq = seq + [elem, elem]
-
-
-a_list = []
-append_twice(a_list, 'Hi!')
-print(a_list)
-
-
-
-
-# What about this?
-
-def append_twice(seq, elem):
-    seq.append(elem)
-    seq.append(elem)
-
-
-a_list = []
-append_twice(a_list, 'Hi!')
-print(a_list)
-
-
-
-
-def twice_appended(seq, elem):
-    return seq + [elem, elem]
-
-
-a_list = []
-a_list = twice_appended(a_list, 'Hi!')
-print(a_list)
+heights = {'Burj Khalifa':  829.8,
+           'Coast Redwood': 115.61,
+           'Robert Wadlow': 2.72}
 
 
 
@@ -290,6 +276,45 @@ def fun(something):
         return something
 
     return closure
+
+
+
+
+# Pop-Quiz!
+# What does this print out?
+
+def append_twice(seq, elem):
+    seq = seq + [elem, elem]
+
+
+a_list = []
+append_twice(a_list, 'Hi!')
+print(a_list)
+
+
+
+
+# What about this?
+
+def append_twice(seq, elem):
+    seq.append(elem)
+    seq.append(elem)
+
+
+a_list = []
+append_twice(a_list, 'Hi!')
+print(a_list)
+
+
+
+
+def twice_appended(seq, elem):
+    return seq + [elem, elem]
+
+
+a_list = []
+a_list = twice_appended(a_list, 'Hi!')
+print(a_list)
 
 
 
@@ -401,7 +426,16 @@ except Exception as e:
 # then it probably is a duck"
 
 def recursive_sum(numbers):
-    pass
+    if type(numbers) == int:
+        return numbers
+
+    if type(numbers) in (list, tuple):
+        result = 0
+
+        for n in numbers:
+            result += recursive_sum(n)
+
+        return result
 
 
 
@@ -425,70 +459,12 @@ def one_to_three_gen():
 
 
 
-import xmltodict
 
-xml = '''
-<root>
-    <list text="yup">
-         <element>two</element>
-         <element>one</element>
-         <element/>
-    </list>
-    <something>else</something>
-</root>
-'''
-
-
-
-
-# Straight from Stack Overflow
-
-def normalise_dict(d):
-    """Recursively normalise OrderedDict into dict. Sorts lists."""
-    out = {}
-    for k, v in dict(d).iteritems():
-        if hasattr(v, 'items'):
-            out[k] = normalise_dict(v)
-        elif isinstance(v, list):
-            out[k] = []
-            for item in sorted(v):
-                if hasattr(item, 'items'):
-                    out[k].append(normalise_dict(item))
-                else:
-                    out[k].append(item)
-        else:
-            out[k] = v
-    return out
-
-print(normalise_dict(xmltodict.parse(xml)))
-
-
-
-
-# How could this be implemented with generator expressions?
-
-
-
-
-def normalise_dict2(d):
+def recursive_sum(numbers):
     try:
-        return dict((k, normalise_dict2(v)) for k, v in d.items())
-    except AttributeError:
-        # There was no .items() -- not a dict-like object!
-        pass
-
-    # Special case: string-like objects. Are iterable but should be
-    # considered a single value.
-    if isinstance(d, basestring):
-        return d
-
-    try:
-        return sorted([normalise_dict2(v) for v in d])
-    except ValueError:
-        # d was not iterable -- not a sequence.
-        pass
-
-    return d
+        return sum(recursive_sum(n) for n in numbers)
+    except TypeError:
+        return numbers
 
 
 
@@ -504,6 +480,24 @@ def normalise_dict2(d):
 
 
 # End of day 1!
+
+
+
+
+# Decorators!
+
+def decorator(func):
+    def newfunc():
+        print('before!')
+        func()
+        print('after!')
+
+    return newfunc
+
+def a_function():
+    print('a_function()')
+
+a_function = decorator(a_function)
 
 
 
@@ -600,12 +594,10 @@ class SomeClass:
         self.some_number = some_number
 
     def __repr__(self):
-        return 'SomeClass({})'.format(
-            self.some_number)
+        return f'SomeClass({self.some_number})'
 
     def __str__(self):
-        return 'Holder of: \n\t{}'.format(
-            self.some_number)
+        return f'Holder of: \n\t{self.some_number}'
 
 
 
@@ -697,4 +689,3 @@ import asyncio
 
 #       1. Use the REPL!
 #       2. Make your code play nice with the REPL!
-
