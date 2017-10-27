@@ -1,0 +1,9 @@
+- equivalent for loop to generator/list expression
+- better description for KeyBasedDict exercise
+- Zipper exercise could be changed to something more... fun
+- add slides about programming with futures
+- talk about packaging python applications with briefcase (or other tool?)
+- add slides about packaging/modules/import logic
+- add slides about flake8 and pylint
+- add slides at end summarizing the most important/different things talked about
+- add slides about EAFP (vs LBYL) around exceptions/duck typing slides
